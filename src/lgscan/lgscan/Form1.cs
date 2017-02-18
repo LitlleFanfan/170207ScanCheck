@@ -522,7 +522,7 @@ namespace lgscan {
 
         private static int parsePlcResult(string data) {
             // %01$RC120
-            if (data.Length < 7) {
+            if (string.IsNullOrEmpty(data) || data.Length < 7) {
                 throw new Exception("plc返回值有错: " + data);
             };
             var s = data.Substring(6, 1);
