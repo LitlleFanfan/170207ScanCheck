@@ -83,6 +83,10 @@ namespace lgscan {
         /// </summary>
         /// <param name="barcode"></param>
         private void HandleBarCode(string barcode) {
+            if (string.IsNullOrEmpty(barcode)) {
+                return;
+            }
+
             var num = InputItem(barcode);
 
             if (iLastStatus != num) {
