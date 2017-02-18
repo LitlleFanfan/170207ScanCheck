@@ -1,0 +1,10 @@
+﻿{
+  camera: {
+    ip:"192.168.0.105"
+    port:9004
+  }
+  plc: {
+    port:"com5"
+	baudrate:9600
+  }
+}
