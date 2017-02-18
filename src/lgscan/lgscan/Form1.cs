@@ -487,17 +487,24 @@ namespace lgscan {
         private void startReadCamera(string ip, int port) {
             isCameraReading = true;
             Task.Run(() => {
-                using (codereader = new BarCodeReader(ip, port)) {
-                    while (isCameraReading) {
-                        var code = codereader.ReadLine();
-                        if (code != "") {
-                            // handle the code.
-                            HandleBarCode(code);
-                            Console.WriteLine(code);
+                try {
+                    using (codereader = new BarCodeReader(ip, port)) {
+                        while (isCameraReading) {
+                            var code = codereader.ReadLine();
+                            if (code != "") {
+                                // handle the code.
+                                HandleBarCode(code);
+                                Console.WriteLine(code);
+                            }
+                            Thread.Sleep(200);
                         }
-                        Thread.Sleep(200);
                     }
+                    isCameraReading = false;
+                } catch (Exception ex) {
+                    isCameraReading = false;
+                    writeLog("连接相机失败。");
                 }
+                
             });
         }
 
@@ -519,13 +526,23 @@ namespace lgscan {
         }
 
         private void btnRun_Click(object sender, EventArgs e) {
-            startReadCamera(conf.camera.ip, conf.camera.port);
-            PlcStartLine("Y0", 1);
+            if (!isCameraReading) {
+                enabelBtns(isCameraReading);
+                startReadCamera(conf.camera.ip, conf.camera.port);
+                // 相机连接有可能失败。
+                PlcStartLine("Y0", 1);
+            } 
+        }
+
+        private void enabelBtns(bool isrunning) {
+            btnRun.Enabled = !isrunning;
+            btnStop.Enabled = isrunning;
         }
 
         private void stopCameraReading() {
             isCameraReading = false;
             Thread.Sleep(2000);
+            enabelBtns(isCameraReading);
         }
 
         private void btnStop_Click(object sender, EventArgs e) {

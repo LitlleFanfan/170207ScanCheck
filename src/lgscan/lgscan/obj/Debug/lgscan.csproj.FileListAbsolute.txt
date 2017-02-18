@@ -22,3 +22,15 @@ D:\leigong\lgscan2\lgscan\src\lgscan\lgscan\obj\Debug\lgscan.Properties.Resource
 D:\leigong\lgscan2\lgscan\src\lgscan\lgscan\obj\Debug\lgscan.csproj.GenerateResource.Cache
 D:\leigong\lgscan2\lgscan\src\lgscan\lgscan\obj\Debug\lgscan.exe
 D:\leigong\lgscan2\lgscan\src\lgscan\lgscan\obj\Debug\lgscan.pdb
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\lgscan.exe.config
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.exe
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.pdb
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\config.hjson
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\lgscan.exe
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\lgscan.pdb
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\EPPlus.dll
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\bin\Debug\Hjson.dll
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.csprojResolveAssemblyReference.cache
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.Form1.resources
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.Properties.Resources.resources
+D:\projects\leigong\github_lgscan\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.csproj.GenerateResource.Cache
