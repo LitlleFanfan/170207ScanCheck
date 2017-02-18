@@ -79,6 +79,10 @@ namespace BarCodeScan {
                 comm.DataBits = 8;
                 comm.StopBits = StopBits.One;
                 comm.NewLine = "\r\n";
+
+                comm.ReadTimeout = 1000;
+                comm.WriteTimeout = 1000;
+
                 comm.Open();
 
                 return true;

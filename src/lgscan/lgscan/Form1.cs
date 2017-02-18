@@ -61,14 +61,19 @@ namespace lgscan {
 
         private void showLineInfo(int status) {
             Invoke((MethodInvoker)delegate {
-                if (status == 1) {
-                    lblResult.Text = "当前商品已经装满，请装其它商品！";
-                    PLC.setM("Y6", 1);
-                    return;
-                }
-                if (status == 2) {
-                    lblResult.Text = "当前商品未装满，不允许装其它商品！";
-                    PLC.setM("Y7", 1);
+                switch(status) {
+                    case 1:
+                        lblResult.Text = "当前商品已经装满，请装其它商品！";
+                        PLC.setM("Y6", 1);
+                        break;
+                    case 2:
+                        lblResult.Text = "当前商品未装满，不允许装其它商品！";
+                        PLC.setM("Y7", 1);
+                        break;
+                    case -1:
+                        lblResult.Text = "号码异常！";
+                        PLC.setM("Y5", 1);
+                        break;
                 }
             });
         }
@@ -527,6 +532,7 @@ namespace lgscan {
 
         private void btnRun_Click(object sender, EventArgs e) {
             if (!isCameraReading) {
+                isCameraReading = true;
                 enabelBtns(isCameraReading);
                 startReadCamera(conf.camera.ip, conf.camera.port);
                 // 相机连接有可能失败。
