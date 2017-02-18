@@ -260,6 +260,7 @@ namespace lgscan {
                         try {
                             if (conf.plc.port != "") {
                                 WriteFile("启动PLC，端口：" + conf.plc.port);
+                                PLC.setM("Y5", 0);
                                 PLC.setM("Y6", 0);
                                 PLC.setM("Y7", 0);
                             }
