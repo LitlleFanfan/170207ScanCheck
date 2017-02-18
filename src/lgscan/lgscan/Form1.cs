@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -521,12 +522,15 @@ namespace lgscan {
         }
 
         private static int parsePlcResult(string data) {
-            // %01$RC120
-            if (string.IsNullOrEmpty(data) || data.Length < 7) {
-                throw new Exception("plc返回值有错: " + data);
-            };
-            var s = data.Substring(6, 1);
-            return int.Parse(s);
+            var pattern = new Regex("");
+            var r = Regex.Match(data, @"\%\d{2}\$RC(?<state>\d)\d*");
+            if (r.Success) {
+                var b = int.Parse(r.Groups["state"].Value);
+                return b;
+            } else {
+                // throw new Exception("plc返回值有错: " + data);
+                return 0;
+            }
         }
 
         private void startPlcInspection() {
