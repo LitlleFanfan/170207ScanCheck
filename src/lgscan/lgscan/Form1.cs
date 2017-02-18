@@ -522,8 +522,8 @@ namespace lgscan {
         }
 
         private static int parsePlcResult(string data) {
-            var pattern = new Regex("");
-            var r = Regex.Match(data, @"\%\d{2}\$RC(?<state>\d)\d*");
+            var pattern = @"\%\d{2}\$RC(?<state>\d)\d*";
+            var r = Regex.Match(data, pattern);
             if (r.Success) {
                 var b = int.Parse(r.Groups["state"].Value);
                 return b;
