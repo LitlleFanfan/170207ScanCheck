@@ -37,6 +37,8 @@ namespace lgscan {
             conf = lgscan.Conf.loadFile(path);
         }
 
+        private object LOCK_PLC = new object();
+
         public Form1() {
             InitializeComponent();
 
@@ -60,22 +62,24 @@ namespace lgscan {
         }
 
         private void showLineInfo(int status) {
-            Invoke((MethodInvoker)delegate {
-                switch(status) {
-                    case 1:
-                        lblResult.Text = "当前商品已经装满，请装其它商品！";
-                        PLC.setM("Y6", 1);
-                        break;
-                    case 2:
-                        lblResult.Text = "当前商品未装满，不允许装其它商品！";
-                        PLC.setM("Y7", 1);
-                        break;
-                    case -1:
-                        lblResult.Text = "号码异常！";
-                        PLC.setM("Y5", 1);
-                        break;
-                }
-            });
+            lock (LOCK_PLC) {
+                Invoke((MethodInvoker)delegate {
+                    switch (status) {
+                        case 1:
+                            lblResult.Text = "当前商品已经装满，请装其它商品！";
+                            PLC.setM("Y6", 1);
+                            break;
+                        case 2:
+                            lblResult.Text = "当前商品未装满，不允许装其它商品！";
+                            PLC.setM("Y7", 1);
+                            break;
+                        case -1:
+                            lblResult.Text = "号码异常！";
+                            PLC.setM("Y5", 1);
+                            break;
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -92,7 +96,9 @@ namespace lgscan {
             if (iLastStatus != num) {
                 try {
                     iLastStatus = num;
-                    PLC.setM("R0", (num == 0) ? 1 : 0);
+                    lock (LOCK_PLC) {
+                        PLC.setM("R0", (num == 0) ? 1 : 0);
+                    }
                     WriteFile(lblBarCode.Text + iLastStatus.ToString());
                 } catch (Exception ex) {
                     WriteFile("HandleBarCode启动PLC出错！错误为：" + ex.Message);
@@ -257,15 +263,11 @@ namespace lgscan {
                         }
 
                         lblResult.Text = "";
-                        try {
-                            if (conf.plc.port != "") {
-                                WriteFile("启动PLC，端口：" + conf.plc.port);
-                                PLC.setM("Y5", 0);
-                                PLC.setM("Y6", 0);
-                                PLC.setM("Y7", 0);
-                            }
-                        } catch (Exception ex) {
-                            WriteFile("打开Excel文件后启动PLC出错！" + ex.Message);
+
+                        lock (LOCK_PLC) {
+                            PLC.setM("Y5", 0);
+                            PLC.setM("Y6", 0);
+                            PLC.setM("Y7", 0);
                         }
 
                         writeLog("加载Excel完毕。");
@@ -514,25 +516,43 @@ namespace lgscan {
                     isCameraReading = false;
                     writeLog("连接相机失败。");
                 }
-                
+
             });
+        }
+
+        private static int parsePlcResult(string data) {
+            return 1;
+        }
+
+        private void startPlcInspection() {
+            Task.Run(() => {
+                while (isCameraReading) {
+                    PLC.read_RCS("");
+                    Thread.Sleep(50);
+                    var value = PLC.GetPLCData();
+                    var state = parsePlcResult(value);
+                    if (state == 0) {
+                        // 停止读相机。
+                        isCameraReading = false;
+                        btnStop.PerformClick();
+                    }
+                    Thread.Sleep(1000);
+                }
+                writeLog("传送带检测线程停止。");
+            });
+            writeLog("启动传送带检测线程。");
         }
 
         private void plcListener(string msg) {
             writeLog(msg);
         }
 
-        private int PlcReadLineStatus(string slot) {
-            PLC.read_RCS(slot);
-            Thread.Sleep(50);
-            var r = PLC.GetPLCData();
-            return Int32.Parse(r);
-        }
-        private void PlcStartLine(string slot, int value) {
+        private static void PlcStartLine() {
+            const string slot = "Y0";
+            const int value = 1;
             PLC.setM(slot, value);
             Thread.Sleep(50);
             PLC.GetPLCData();
-            // writeLog(r);
         }
 
         private void btnRun_Click(object sender, EventArgs e) {
@@ -541,8 +561,10 @@ namespace lgscan {
                 enabelBtns(isCameraReading);
                 startReadCamera(conf.camera.ip, conf.camera.port);
                 // 相机连接有可能失败。
-                PlcStartLine("Y0", 1);
-            } 
+                PlcStartLine();
+                Thread.Sleep(100);
+                startPlcInspection();
+            }
         }
 
         private void enabelBtns(bool isrunning) {
@@ -559,18 +581,6 @@ namespace lgscan {
         private void btnStop_Click(object sender, EventArgs e) {
             stopCameraReading();
             PLC.setM("Y0", 0);
-        }
-
-        private void checkPlcTask() {
-            Task.Run(() => {
-                while (true) {
-                    var d = PlcReadLineStatus("");
-                    if (d == 0) {
-                        stopCameraReading();
-                    }
-                }
-            });
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
