@@ -56,7 +56,7 @@ namespace BarCodeScan {
         // private static double[] DTValue = null;
         // private static System.Collections.BitArray[] arrXYMValue = null;
         // private const int iDelay = 60;
-       private static bool bRecieveData;
+        private static bool bRecieveData;
 
         // 用于外部接收调试信息。
         private static Action<string> loghandler;
@@ -124,50 +124,47 @@ namespace BarCodeScan {
         public static byte[] Sub(byte[] b1, int index, int length) {
             if (b1.Length < index + length + 1)
                 return null;
-            byte[] re = new byte[length];
+            var re = new byte[length];
             for (int i = 0; i < length; i++) {
                 re[i] = b1[i + index];
             }
             return re;
         }
+
         /// <summary>
         /// 设置单触点
-        /// setM(string XYMaddr,int value)
-        /// XYMaddr:寄存器地址
-        /// value=0 off;
-        /// value=1 on;
         /// </summary>
+        /// <param name="XYMaddr">寄存器地址</param>
+        /// <param name="value">0 off, 1 on</param>
         public static void setM(string XYMaddr, int value) //value 0=off,1=on
         {
             //发送:%01#WCSY00011**[CR]
             bRecieveData = false;
-            string outStr = "";
-            string sReg = XYMaddr.Substring(0, 1);
-            string sAddr = XYMaddr.Substring(1, XYMaddr.Length - 1).PadLeft(4).Replace(" ", "0");
-            outStr = "%01#WCS" + sReg + sAddr + value.ToString();
+
+            var sReg = XYMaddr.Substring(0, 1);
+            var sAddr = XYMaddr.Substring(1, XYMaddr.Length - 1).PadLeft(4).Replace(" ", "0");
+            var outStr = "%01#WCS" + sReg + sAddr + value.ToString();
             outStr = outStr + bcc(outStr) + "\r";
-            //outStr = outStr + "**" + "\r";
+
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
-            return;
         }
 
         public static void setMs(string[] XYMaddr) //value 0=off,1=on
         {
             //发送:%01#WCSY00011**[CR]
             bRecieveData = false;
-            string outStr = "";
-            string val = "";
+            var val = "";
             foreach (string s in XYMaddr) {
-                string sReg = s.Substring(0, 1);
-                string[] t = s.Split('/');
-                string sAddr = t[0].Substring(1, t[0].Length - 1).Split('/')[0].PadLeft(4).Replace(" ", "0");
+                var sReg = s.Substring(0, 1);
+                var t = s.Split('/');
+                var sAddr = t[0].Substring(1, t[0].Length - 1).Split('/')[0].PadLeft(4).Replace(" ", "0");
                 val = val + sReg + sAddr + t[1];
             }
-            outStr = "%01#WCP" + val;
+            var outStr = "%01#WCP" + val;
             outStr = outStr + bcc(outStr) + "\r";
-            //outStr = outStr + "**" + "\r";
+
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
@@ -176,12 +173,11 @@ namespace BarCodeScan {
 
         public static void read_RCS(string XYMaddr) {
             //发送:%01#RCSY0001**[CR]
-            var outStr = "";
             var sReg = XYMaddr.Substring(0, 1);
             var sAddr = XYMaddr.Substring(1, XYMaddr.Length - 1).PadLeft(4).Replace(" ", "0");
-            outStr = "%01#RCS" + sReg + sAddr;
+            var outStr = "%01#RCS" + sReg + sAddr;
             outStr = outStr + bcc(outStr) + "\r";
-            //outStr = outStr + "**" + "\r";
+
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
@@ -190,16 +186,15 @@ namespace BarCodeScan {
 
         public static void read_RCP(string[] XYMaddr) {
             //发送:%01#RCSY0001**[CR]
-            string outStr = "";
-            string val = "";
+            var val = "";
             foreach (string s in XYMaddr) {
-                string sReg = s.Substring(0, 1);
-                string sAddr = s.Substring(1, s.Length - 1).PadLeft(4).Replace(" ", "0");
+                var sReg = s.Substring(0, 1);
+                var sAddr = s.Substring(1, s.Length - 1).PadLeft(4).Replace(" ", "0");
                 val = val + sReg + sAddr;
             }
-            outStr = "%01#RCP" + val;
+            var outStr = "%01#RCP" + val;
             outStr = outStr + bcc(outStr) + "\r";
-            //outStr = outStr + "**" + "\r";
+
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
@@ -208,87 +203,78 @@ namespace BarCodeScan {
 
         /// <summary>
         /// 本命令只是发送，取值，取值在OnDataReceived里
-        ///按字读取触点
-        /// readMS(string DTaddr1, string DTaddr2)
-        /// DTaddr1:寄存器起始地址
-        /// DTaddr2:寄存器结束地址
+        /// 按字读取触点
         /// 如:readMS("M1","M4");
         /// %01#RCCR00090009 读WR9到WR9
         /// </summary>
-        /// <param name="chkString"></param>
-        /// <returns></returns>
+        /// <param name="DTaddr1">寄存器起始地址</param>
+        /// <param name="DTaddr2">寄存器结束地址</param>
         public static void readMS(string DTaddr1, string DTaddr2) {            //-------------地址转换---------------------
-            string sReg = DTaddr1.Substring(0, 1); //获取"D"
-            string sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
-            string sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
-            int iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1 //---------------------按字读触点地址要除于10？
+            var sReg = DTaddr1.Substring(0, 1); //获取"D"
+            var sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
+            var sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
+            var iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1 //---------------------按字读触点地址要除于10？
             sA1 = sA1.PadLeft(4).Replace(" ", "0");
             sA2 = sA2.PadLeft(4).Replace(" ", "0");
-            string sAddr = sReg + sA1 + sA2; //地址:D0000100004
-            //------------------------------------------
-            string outStr = "";
-            outStr = "%01#RCC" + sAddr;
+            var sAddr = sReg + sA1 + sA2; //地址:D0000100004
+
+            var outStr = "%01#RCC" + sAddr;
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
+
         /// <summary>
-        /// writeDT(string DTaddr1,string DTaddr2, int value)
-        /// DTaddr1:寄存器起始地址
-        /// DTaddr2:寄存器结束地址
-        /// value=数值;
         /// 如:writeDT("D1","D4",arrValue); 其中double[] arrValue={0.1,23.3,22.0,43.55};
         /// </summary>
+        /// <param name="DTaddr1">寄存器起始地址</param>
+        /// <param name="DTaddr2">寄存器结束地址</param>
+        /// <param name="value"></param>
         public static void writeDT(string DTaddr1, string DTaddr2, double[] value) {
             //发送:%01%WDD00001000030500071500095D[CR]
             //-------------地址转换---------------------
-            string sReg = DTaddr1.Substring(0, 1); //获取"D"
-            string sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
-            string sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
-            int iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1
+            var sReg = DTaddr1.Substring(0, 1); //获取"D"
+            var sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
+            var sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
+            var iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1
             sA1 = sA1.PadLeft(5).Replace(" ", "0");
             sA2 = sA2.PadLeft(5).Replace(" ", "0");
-            string sAddr = sReg + sA1 + sA2; //地址:D0000100004
-            //-------------数值转换---------------------
-            string sValues = "";
-            string sValue = "";
+            var sAddr = sReg + sA1 + sA2; //地址:D0000100004
+
+            var valuesBuilder = new StringBuilder();
             for (int i = 0; i < iLen; i++) {
-                sValue = ((int)(value[i] * 1000)).ToString();
+                var sValue = ((int)(value[i] * 1000)).ToString();
                 sValue = Convert.ToInt32(sValue).ToString("X4");
                 sValue = sValue.Substring(2, 2) + sValue.Substring(0, 2);
-                sValues += sValue;
+                valuesBuilder.Append(sValue);
             }
-            //------------------------------------------
-            string outStr = "";
-            outStr = "%01#WD" + sAddr + sValues;
+
+            var outStr = "%01#WD" + sAddr + valuesBuilder.ToString();
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
             Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
+
         /// <summary>
         /// 本命令只是发送，取值，取值在OnDataReceived里
-        /// readDT(string DTaddr1, string DTaddr2)
-        /// DTaddr1:寄存器起始地址
-        /// DTaddr2:寄存器结束地址
         /// 如:readDT("D1","D4");
         /// </summary>
-        /// <param name="chkString"></param>
-        /// <returns></returns>
+        /// <param name="DTaddr1">寄存器起始地址</param>
+        /// <param name="DTaddr2">寄存器结束地址</param>
         public static void readDT(string DTaddr1, string DTaddr2) {            //-------------地址转换---------------------
-            string sReg = DTaddr1.Substring(0, 1); //获取"D"
-            string sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
-            string sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
-            int iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1
+            var sReg = DTaddr1.Substring(0, 1); //获取"D"
+            var sA1 = DTaddr1.Substring(1, DTaddr1.Length - 1); //DT1中的1
+            var sA2 = DTaddr2.Substring(1, DTaddr2.Length - 1); //DT4中的4
+            var iLen = Convert.ToInt16(sA2) - Convert.ToInt16(sA1) + 1; //4-1
             sA1 = sA1.PadLeft(5).Replace(" ", "0");
             sA2 = sA2.PadLeft(5).Replace(" ", "0");
-            string sAddr = sReg + sA1 + sA2; //地址:D0000100004
-            //------------------------------------------
-            string outStr = "";
-            outStr = "%01#RD" + sAddr;
+            var sAddr = sReg + sA1 + sA2; //地址:D0000100004
+
+            var outStr = "%01#RD" + sAddr;
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
             Thread.Sleep(DELAY);
@@ -296,19 +282,17 @@ namespace BarCodeScan {
             return;
         }
         private static string bcc(string chkString) {
-            int chkSum = 0;
-            string chkSums = "";
-            int k;
-            for (k = 0; k < chkString.Length; k++) {
+            var chkSum = 0;
+            for (var k = 0; k < chkString.Length; k++) {
                 chkSum = chkSum ^ Asc(chkString.Substring(k, 1));
             }
-            chkSums = Convert.ToString(chkSum, 16);
+            var chkSums = Convert.ToString(chkSum, 16);
             return chkSums.Substring(chkSums.Length - 2, 2).ToUpper();
         }
         private static int Asc(string character) {
             if (character.Length == 1) {
-                System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
-                int intAsciiCode = (int)asciiEncoding.GetBytes(character)[0];
+                var asciiEncoding = new ASCIIEncoding();
+                var intAsciiCode = (int)asciiEncoding.GetBytes(character)[0];
                 return (intAsciiCode);
             } else {
                 throw new Exception("Character is not valid.");
@@ -319,27 +303,14 @@ namespace BarCodeScan {
         /// <summary>
         /// 写文件
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="sData"></param>
         public static void WriteFile(string sData) {
-            try {
-
-                string path = Application.StartupPath + "PLC" + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
-                if ("PLC" == "") {
-                    path = @"C:\BarCodeScan_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
-                }
-                FileStream fs = new FileStream(path, FileMode.Append);
-                System.Text.Encoding code = System.Text.Encoding.GetEncoding("gb2312");
-                StreamWriter sw = new StreamWriter(fs, code);
-                //开始写入
-                sw.Write(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "\t\t" + sData + "\r\n");
-                //清空缓冲区
-                sw.Flush();
-                //关闭流
-                sw.Close();
-                fs.Close();
-
-            } catch (Exception ex) {
-                //MessageBox.Show("写日志文件出现了错：" + ex.Message);
+            const string FORMAT = "yyyy-MM-dd HH:mm:ss fff";
+            var path = Application.StartupPath + "PLC_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+            var code = Encoding.GetEncoding("gb2312");
+            using (var fs = new FileStream(path, FileMode.Append))
+            using (var sw = new StreamWriter(fs, code)) {
+                sw.Write(DateTime.Now.ToString(FORMAT) + "\t\t" + sData + "\r\n");
             }
         }
         #endregion
