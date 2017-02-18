@@ -521,7 +521,12 @@ namespace lgscan {
         }
 
         private static int parsePlcResult(string data) {
-            return 1;
+            // %01$RC120
+            if (data.Length < 7) {
+                throw new Exception("plc返回值有错: " + data);
+            };
+            var s = data.Substring(6, 1);
+            return int.Parse(s);
         }
 
         private void startPlcInspection() {
