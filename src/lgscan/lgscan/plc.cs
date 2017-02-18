@@ -53,13 +53,14 @@ namespace BarCodeScan {
          *----------------------*/
         private static TextBox txtCommLog = new TextBox();
         private static SerialPort comm = new SerialPort();
-        private static double[] DTValue = null;
-        private static System.Collections.BitArray[] arrXYMValue = null;
-        private const int iDelay = 60;
-        private static bool bRecieveData = false;
+        // private static double[] DTValue = null;
+        // private static System.Collections.BitArray[] arrXYMValue = null;
+        // private const int iDelay = 60;
+       private static bool bRecieveData;
 
         // 用于外部接收调试信息。
         private static Action<string> loghandler;
+        private const int DELAY = 50;
 
         public static void setHandler(Action<string> handler) {
             loghandler = handler;
@@ -147,6 +148,7 @@ namespace BarCodeScan {
             outStr = outStr + bcc(outStr) + "\r";
             //outStr = outStr + "**" + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -167,6 +169,7 @@ namespace BarCodeScan {
             outStr = outStr + bcc(outStr) + "\r";
             //outStr = outStr + "**" + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -180,6 +183,7 @@ namespace BarCodeScan {
             outStr = outStr + bcc(outStr) + "\r";
             //outStr = outStr + "**" + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -197,6 +201,7 @@ namespace BarCodeScan {
             outStr = outStr + bcc(outStr) + "\r";
             //outStr = outStr + "**" + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -225,6 +230,7 @@ namespace BarCodeScan {
             outStr = "%01#RCC" + sAddr;
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -259,6 +265,7 @@ namespace BarCodeScan {
             outStr = "%01#WD" + sAddr + sValues;
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
@@ -284,6 +291,7 @@ namespace BarCodeScan {
             outStr = "%01#RD" + sAddr;
             outStr = outStr + bcc(outStr) + "\r";
             comm.Write(outStr);
+            Thread.Sleep(DELAY);
             SetText("[PC->PLC]:" + outStr);
             return;
         }
