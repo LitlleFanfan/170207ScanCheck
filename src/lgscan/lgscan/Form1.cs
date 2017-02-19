@@ -548,7 +548,10 @@ namespace lgscan {
                     if (state == 0) {
                         // 停止读相机。
                         isCameraReading = false;
-                        btnStop.PerformClick();
+
+                        this.Invoke((MethodInvoker)delegate {
+                            btnStop.PerformClick();
+                        });
                     }
                     Thread.Sleep(1000);
                 }
