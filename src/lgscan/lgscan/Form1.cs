@@ -32,6 +32,8 @@ namespace lgscan {
         private BarCodeReader codereader;
         private bool isCameraReading;
 
+        private bool runInspecting = true;
+
         public static lgscan.Conf conf = null;
         public static void loadConf() {
             var path = Path.Combine(Application.StartupPath, "config.hjson");
@@ -535,7 +537,7 @@ namespace lgscan {
 
         private void startPlcInspection() {
             Task.Run(() => {
-                while (isCameraReading) {
+                while (runInspecting) {
                     PLC.read_RCS("Y0");
                     var value = PLC.GetPLCData();
 
@@ -601,6 +603,8 @@ namespace lgscan {
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            runInspecting = false;
+            Thread.Sleep(1000);
             PLC.Close();
         }
 
