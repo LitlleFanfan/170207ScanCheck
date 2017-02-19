@@ -304,13 +304,13 @@ namespace BarCodeScan {
         /// 写文件
         /// </summary>
         /// <param name="sData"></param>
-        public static void WriteFile(string sData) {
-            const string FORMAT = "yyyy-MM-dd HH:mm:ss fff";
+        public static void WriteLogFile(string sData) {
+            const string DATE_FMT = "yyyy-MM-dd HH:mm:ss fff";
             var path = Application.StartupPath + "PLC_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
             var code = Encoding.GetEncoding("gb2312");
             using (var fs = new FileStream(path, FileMode.Append))
             using (var sw = new StreamWriter(fs, code)) {
-                sw.Write(DateTime.Now.ToString(FORMAT) + "\t\t" + sData + "\r\n");
+                sw.Write(DateTime.Now.ToString(DATE_FMT) + "\t\t" + sData + "\r\n");
             }
         }
         #endregion

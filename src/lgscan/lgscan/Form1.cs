@@ -37,6 +37,8 @@ namespace lgscan {
         private const string PLC_SLOT_Y0 = "Y0";
         private const string PLC_SLOT_Y3 = "Y3";
 
+        const string DATE_FMT = "yyyy-MM-dd HH:mm:ss";
+
         public static lgscan.Conf conf = null;
         public static void loadConf() {
             var path = Path.Combine(Application.StartupPath, "config.hjson");
@@ -49,7 +51,7 @@ namespace lgscan {
             InitializeComponent();
 
             Text = "装柜计数系统 v1.1";
-            lblResult.Text = ""; // 清除报警信息。            
+            lblResult.Text = ""; // 清除报警信息。    
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -501,8 +503,8 @@ namespace lgscan {
                     lbxLog.Items.RemoveAt(count - 1);
                 }
 
-                const string FMT = "yyyy-MM-dd hh:mm:ss";
-                var s = $"[{DateTime.Now.ToString(FMT)}] {msg}";
+               
+                var s = $"[{DateTime.Now.ToString(DATE_FMT)}] {msg}";
                 lbxLog.Items.Insert(0, s);
             });
         }
