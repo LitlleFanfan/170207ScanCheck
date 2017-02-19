@@ -609,13 +609,13 @@ namespace lgscan {
         }
 
         private void btnStopLine_Click(object sender, EventArgs e) {
-            PLC.setM("Y3", 1);
+            PLC.setM("Y3", 0);
             var data = PLC.GetPLCData();
             writeLog("发出生产线停止命令");
         }
 
         private void btnStartLine_Click(object sender, EventArgs e) {
-            PLC.setM("Y3", 0);
+            PLC.setM("Y3", 1);
             var data = PLC.GetPLCData();
             writeLog("发出生产线启动命令");
         }
