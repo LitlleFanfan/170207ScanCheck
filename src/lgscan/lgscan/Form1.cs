@@ -102,10 +102,6 @@ namespace lgscan {
         /// </summary>
         /// <param name="barcode"></param>
         private void HandleBarCode(string barcode) {
-            if (string.IsNullOrEmpty(barcode)) {
-                return;
-            }
-
             var num = InputItem(barcode);
 
             if (iLastStatus != num) {
@@ -518,10 +514,11 @@ namespace lgscan {
                     using (codereader = new BarCodeReader(ip, port)) {
                         while (isCameraReading) {
                             var code = codereader.ReadLine();
-                            if (code != "") {
+                            code = stripBarcode(code);
+
+                            if (!string.IsNullOrEmpty(code)) {
                                 // handle the code.
                                 HandleBarCode(code);
-                                Console.WriteLine(code);
                             }
                             Thread.Sleep(200);
                         }
@@ -582,10 +579,7 @@ namespace lgscan {
         }
 
         private static void PlcStartLine() {
-            const string slot = PLC_SLOT_Y0;
-            const int value = 1;
-            PLC.setM(slot, value);
-            Thread.Sleep(50);
+            PLC.setM(PLC_SLOT_Y0, 1);
             PLC.GetPLCData();
         }
 
@@ -632,6 +626,15 @@ namespace lgscan {
             PLC.setM(PLC_SLOT_Y3, 1);
             var data = PLC.GetPLCData();
             writeLog("发出生产线启动命令");
+        }
+
+        private static string stripBarcode(string s) {
+            if (!string.IsNullOrEmpty(s)) {
+                var stx = new char[] { (char)02 };
+                return s.TrimStart(stx).TrimEnd();
+            } else {
+                return s;
+            }
         }
     }
 }
