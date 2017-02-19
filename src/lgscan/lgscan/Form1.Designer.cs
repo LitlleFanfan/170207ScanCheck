@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnOpenExcel = new System.Windows.Forms.ToolStripButton();
             this.btnRun = new System.Windows.Forms.ToolStripButton();
@@ -52,6 +52,8 @@
             this.lblResult = new System.Windows.Forms.Label();
             this.lblBarCode = new System.Windows.Forms.Label();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
+            this.btnStopLine = new System.Windows.Forms.Button();
+            this.btnStartLine = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -170,23 +172,23 @@
             // 
             this.gvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gvData.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gvData.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.gvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvData.Location = new System.Drawing.Point(0, 0);
             this.gvData.MultiSelect = false;
@@ -232,6 +234,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnStartLine);
+            this.panel1.Controls.Add(this.btnStopLine);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label4);
@@ -376,6 +380,26 @@
             // 
             this.openFile.FileName = "openFileDialog1";
             // 
+            // btnStopLine
+            // 
+            this.btnStopLine.Location = new System.Drawing.Point(340, 82);
+            this.btnStopLine.Name = "btnStopLine";
+            this.btnStopLine.Size = new System.Drawing.Size(134, 44);
+            this.btnStopLine.TabIndex = 14;
+            this.btnStopLine.Text = "停止生产线";
+            this.btnStopLine.UseVisualStyleBackColor = true;
+            this.btnStopLine.Click += new System.EventHandler(this.btnStopLine_Click);
+            // 
+            // btnStartLine
+            // 
+            this.btnStartLine.Location = new System.Drawing.Point(340, 32);
+            this.btnStartLine.Name = "btnStartLine";
+            this.btnStartLine.Size = new System.Drawing.Size(134, 44);
+            this.btnStartLine.TabIndex = 15;
+            this.btnStartLine.Text = "启动生产线";
+            this.btnStartLine.UseVisualStyleBackColor = true;
+            this.btnStartLine.Click += new System.EventHandler(this.btnStartLine_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -435,6 +459,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStripButton btnRun;
         private System.Windows.Forms.ToolStripButton btnStop;
+        private System.Windows.Forms.Button btnStopLine;
+        private System.Windows.Forms.Button btnStartLine;
     }
 }
 
