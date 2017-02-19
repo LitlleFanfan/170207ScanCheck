@@ -536,9 +536,14 @@ namespace lgscan {
         private void startPlcInspection() {
             Task.Run(() => {
                 while (isCameraReading) {
-                    PLC.read_RCS("");
-                    Thread.Sleep(50);
+                    PLC.read_RCS("Y0");
                     var value = PLC.GetPLCData();
+
+                    if (string.IsNullOrEmpty(value)) {
+                        Thread.Sleep(100);
+                        continue;
+                    }
+
                     var state = parsePlcResult(value);
                     if (state == 0) {
                         // 停止读相机。
