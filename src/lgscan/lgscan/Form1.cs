@@ -547,7 +547,7 @@ namespace lgscan {
                     }
 
                     var state = parsePlcResult(value);
-                    if (state == 0) {
+                    if (state == 0 && isCameraReading) {
                         // 停止读相机。
                         isCameraReading = false;
 
@@ -555,6 +555,13 @@ namespace lgscan {
                             btnStop.PerformClick();
                         });
                     }
+
+                    if (state == 1 && !isCameraReading) {
+                        this.Invoke((MethodInvoker)delegate {
+                            btnRun.PerformClick();
+                        });
+                    }
+
                     Thread.Sleep(1000);
                 }
                 writeLog("传送带检测线程停止。");
