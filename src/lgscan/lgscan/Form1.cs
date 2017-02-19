@@ -83,6 +83,12 @@ namespace lgscan {
                             lblResult.Text = "号码异常！";
                             PLC.setM("Y5", 1);
                             break;
+                        default:
+                            lblResult.Text = "";
+                            PLC.setM("Y5", 0);
+                            PLC.setM("Y6", 0);
+                            PLC.setM("Y7", 0);
+                            break;
                     }
                 });
             }
@@ -517,7 +523,6 @@ namespace lgscan {
                             Thread.Sleep(200);
                         }
                     }
-                    isCameraReading = false;
                 } catch (Exception ex) {
                     isCameraReading = false;
                     writeLog("连接相机失败。");
@@ -551,9 +556,6 @@ namespace lgscan {
 
                     var state = parsePlcResult(value);
                     if (state == 0 && isCameraReading) {
-                        // 停止读相机。
-                        isCameraReading = false;
-
                         this.Invoke((MethodInvoker)delegate {
                             btnStop.PerformClick();
                         });
