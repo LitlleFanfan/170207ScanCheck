@@ -34,6 +34,9 @@ namespace lgscan {
 
         private bool runInspecting = true;
 
+        private const string PLC_SLOT_Y0 = "Y0";
+        private const string PLC_SLOT_Y3 = "Y3";
+
         public static lgscan.Conf conf = null;
         public static void loadConf() {
             var path = Path.Combine(Application.StartupPath, "config.hjson");
@@ -45,7 +48,7 @@ namespace lgscan {
         public Form1() {
             InitializeComponent();
 
-            Text = "装柜计数系统 v1.0";
+            Text = "装柜计数系统 v1.1";
             lblResult.Text = ""; // 清除报警信息。            
         }
 
@@ -546,7 +549,7 @@ namespace lgscan {
         private void startPlcInspection() {
             Task.Run(() => {
                 while (runInspecting) {
-                    PLC.read_RCS("Y0");
+                    PLC.read_RCS(PLC_SLOT_Y0);
                     var value = PLC.GetPLCData();
 
                     if (string.IsNullOrEmpty(value)) {
@@ -579,7 +582,7 @@ namespace lgscan {
         }
 
         private static void PlcStartLine() {
-            const string slot = "Y0";
+            const string slot = PLC_SLOT_Y0;
             const int value = 1;
             PLC.setM(slot, value);
             Thread.Sleep(50);
@@ -610,7 +613,7 @@ namespace lgscan {
 
         private void btnStop_Click(object sender, EventArgs e) {
             stopCameraReading();
-            PLC.setM("Y0", 0);
+            PLC.setM(PLC_SLOT_Y0, 0);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
@@ -620,13 +623,13 @@ namespace lgscan {
         }
 
         private void btnStopLine_Click(object sender, EventArgs e) {
-            PLC.setM("Y3", 0);
+            PLC.setM(PLC_SLOT_Y3, 0);
             var data = PLC.GetPLCData();
             writeLog("发出生产线停止命令");
         }
 
         private void btnStartLine_Click(object sender, EventArgs e) {
-            PLC.setM("Y3", 1);
+            PLC.setM(PLC_SLOT_Y3, 1);
             var data = PLC.GetPLCData();
             writeLog("发出生产线启动命令");
         }

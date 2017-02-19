@@ -382,22 +382,24 @@
             // 
             // btnStopLine
             // 
-            this.btnStopLine.Location = new System.Drawing.Point(340, 82);
+            this.btnStopLine.Location = new System.Drawing.Point(419, 239);
             this.btnStopLine.Name = "btnStopLine";
             this.btnStopLine.Size = new System.Drawing.Size(134, 44);
             this.btnStopLine.TabIndex = 14;
             this.btnStopLine.Text = "停止生产线";
             this.btnStopLine.UseVisualStyleBackColor = true;
+            this.btnStopLine.Visible = false;
             this.btnStopLine.Click += new System.EventHandler(this.btnStopLine_Click);
             // 
             // btnStartLine
             // 
-            this.btnStartLine.Location = new System.Drawing.Point(340, 32);
+            this.btnStartLine.Location = new System.Drawing.Point(419, 189);
             this.btnStartLine.Name = "btnStartLine";
             this.btnStartLine.Size = new System.Drawing.Size(134, 44);
             this.btnStartLine.TabIndex = 15;
             this.btnStartLine.Text = "启动生产线";
             this.btnStartLine.UseVisualStyleBackColor = true;
+            this.btnStartLine.Visible = false;
             this.btnStartLine.Click += new System.EventHandler(this.btnStartLine_Click);
             // 
             // Form1
