@@ -53,8 +53,11 @@ namespace lgscan {
             Form1.loadConf();
             writeLog(conf.ToString());
 
-            PLC.setHandler(plcListener);
+            // PLC.setHandler(plcListener);
             PLC.Open(conf.plc.port, conf.plc.baudrate);
+
+            runInspecting = true;
+            startPlcInspection();
         }
 
         private void btnExit_Click(object sender, EventArgs e) {
@@ -589,7 +592,6 @@ namespace lgscan {
                 // 相机连接有可能失败。
                 PlcStartLine();
                 Thread.Sleep(100);
-                startPlcInspection();
             }
         }
 
