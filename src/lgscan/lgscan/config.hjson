@@ -5,10 +5,10 @@
   }
   plc: {
     port:"com5"
-	baudrate:9600
+    baudrate:9600
   }
   weigh: {
     port:"com5"
-	baudrate:9600
+    baudrate:38400
   }
 }
