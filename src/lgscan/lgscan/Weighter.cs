@@ -42,13 +42,17 @@ namespace lgscan {
 
             var pattern = "^(OK|NG):(\\d+\\.\\d+)KG$";
 
-            var re = new Regex(pattern);
-            var m = re.Match(data);
-            if (m.Success) {
-                var success = m.Groups[1].Value == OK;
-                var value = double.Parse(m.Groups[2].Value);
-                return new Weight(success, value);
-            } else {
+            try {
+                var re = new Regex(pattern);
+                var m = re.Match(data);
+                if (m.Success) {
+                    var success = m.Groups[1].Value == OK;
+                    var value = double.Parse(m.Groups[2].Value);
+                    return new Weight(success, value);
+                } else {
+                    return null;
+                }
+            } catch {
                 return null;
             }
         }

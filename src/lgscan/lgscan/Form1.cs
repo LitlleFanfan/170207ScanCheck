@@ -84,6 +84,10 @@ namespace lgscan {
                             lblResult.Text = "当前商品未装满，不允许装其它商品！";
                             PLC.setM("Y7", 1);
                             break;
+                        case 3:
+                            lblResult.Text = "重量不合格！";
+                            PLC.setM("Y4", 1);
+                            break;
                         case -1:
                             lblResult.Text = "号码异常！";
                             PLC.setM("Y5", 1);
@@ -93,6 +97,7 @@ namespace lgscan {
                             PLC.setM("Y5", 0);
                             PLC.setM("Y6", 0);
                             PLC.setM("Y7", 0);
+                            PLC.setM("Y4", 0);
                             break;
                     }
                 });
@@ -119,6 +124,24 @@ namespace lgscan {
             }
 
             showLineInfo(num);
+        }
+
+        private bool HandleWeight(string code, double weight) {
+            var rt = false;
+            Invoke((MethodInvoker)delegate {
+                for (var i = 0; i < gvData.Rows.Count; i++) {
+                    var row = gvData.Rows[i];
+                    var evno = row.Cells["EvNo"].Value.ToString();
+                    var gw = (double)row.Cells["GrossWt"].Value;
+                    var wt = (double)row.Cells["WtTolerance"].Value;
+
+                    if (evno == code && Math.Abs(gw - weight) <= wt) {
+                        rt = true;
+                        break;
+                    }
+                }
+            });
+            return rt;
         }
 
         public static DataSet ToDataTable(string filePath) {
@@ -525,11 +548,12 @@ namespace lgscan {
             });
         }
 
-        private void startReadCamera(string ip, int port) {
+        private void startReadCamera(Conf conf) {
             isCameraReading = true;
             Task.Run(() => {
+                var weiter = new Weighter(conf.weigh.port, conf.weigh.baudrate);
                 try {
-                    using (codereader = new BarCodeReader(ip, port)) {
+                    using (codereader = new BarCodeReader(conf.camera.ip, conf.camera.port)) {
                         while (isCameraReading) {
                             var code = codereader.ReadLine();
                             code = stripBarcode(code);
@@ -538,14 +562,29 @@ namespace lgscan {
                                 // handle the code.
                                 HandleBarCode(code);
                             }
+
+                            // 称重
+                            var w = weiter.ReadWeight();
+                            // 比较
+                            var weightOk = false;
+                            if (w != null) {
+                                weightOk = HandleWeight(code, w.value);
+                            }
+
+                            // 显示结果
+                            if (!weightOk) {
+                                showLineInfo(3);
+                            }
+
                             Thread.Sleep(200);
                         }
                     }
                 } catch (Exception ex) {
                     isCameraReading = false;
                     writeLog("连接相机失败。");
+                } finally {
+                    weiter.Close();
                 }
-
             });
         }
 
@@ -605,7 +644,7 @@ namespace lgscan {
             if (!isCameraReading) {
                 isCameraReading = true;
                 enabelBtns(isCameraReading);
-                startReadCamera(conf.camera.ip, conf.camera.port);
+                startReadCamera(conf);
                 // 相机连接有可能失败。
                 PlcStartLine();
                 Thread.Sleep(100);
