@@ -195,6 +195,8 @@ namespace lgscan {
                         dataTable2.Columns.Add("EVNo");
                         dataTable2.Columns.Add("Number", typeof(int));
                         dataTable2.Columns.Add("Already", typeof(int));
+                        dataTable2.Columns.Add("GrossWt", typeof(decimal));
+                        dataTable2.Columns.Add("WtTolerance", typeof(decimal));
                         var fileName = GetFileName();
                         if (File.Exists(fileName)) {
                             if (MessageBox.Show("当前柜已有装柜记录，是否继续之前的装柜？", "重要提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes) {
@@ -218,6 +220,8 @@ namespace lgscan {
                                     dataRow2["EVNo"] = dataRow[0].ToString();
                                     dataRow2["Number"] = num4;
                                     dataRow2["Already"] = num5;
+                                    dataRow2["GrossWt"] = dataRow[3];
+                                    dataRow2["WtTolerance"] = dataRow[4];
                                     if (num4 > num5 & num5 > 0 & num3 == 0) {
                                         num2 = num4;
                                         num3 = num5;
@@ -246,6 +250,8 @@ namespace lgscan {
                                     dataRow2["EVNo"] = dataRow[2].ToString();
                                     dataRow2["Number"] = int.Parse(dataRow[7].ToString());
                                     dataRow2["Already"] = 0;
+                                    dataRow2["GrossWt"] = decimal.Parse(dataRow[18].ToString());
+                                    dataRow2["WtTolerance"] = decimal.Parse(dataRow[19].ToString());
                                     dataTable2.Rows.Add(dataRow2);
                                 }
                             }
@@ -259,6 +265,8 @@ namespace lgscan {
                                 dataRow2["EVNo"] = dataRow[2].ToString();
                                 dataRow2["Number"] = int.Parse(dataRow[7].ToString());
                                 dataRow2["Already"] = 0;
+                                dataRow2["GrossWt"] = decimal.Parse(dataRow[18].ToString());
+                                dataRow2["WtTolerance"] = decimal.Parse(dataRow[19].ToString());
                                 dataTable2.Rows.Add(dataRow2);
                             }
                         }
@@ -266,11 +274,19 @@ namespace lgscan {
                         gvData.Columns[0].HeaderCell.Value = "EV号码";
                         gvData.Columns[1].HeaderCell.Value = "箱数";
                         gvData.Columns[2].HeaderCell.Value = "已装箱数";
-                        gvData.Columns[0].Width = 132;
-                        gvData.Columns[1].Width = 100;
-                        gvData.Columns[2].Width = 100;
+                        gvData.Columns[3].HeaderCell.Value = "毛重(kg)";
+                        gvData.Columns[4].HeaderCell.Value = "毛重公差(kg)";
+                        gvData.Columns[0].Width = 125;
+                        gvData.Columns[1].Width = 90;
+                        gvData.Columns[2].Width = 90;
+                        gvData.Columns[3].Width = 90;
+                        gvData.Columns[4].Width = 130;
                         gvData.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight;
                         gvData.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight;
+                        gvData.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight;
+                        gvData.Columns[3].DefaultCellStyle.Format = "f4";
+                        gvData.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight;
+                        gvData.Columns[4].DefaultCellStyle.Format = "f6";
                         if (gvData.Rows.Count > 0 & num > 0) {
                             gvData.Rows[iCurrentIndex].Selected = true;
                         }
@@ -503,7 +519,7 @@ namespace lgscan {
                     lbxLog.Items.RemoveAt(count - 1);
                 }
 
-               
+
                 var s = $"[{DateTime.Now.ToString(DATE_FMT)}] {msg}";
                 lbxLog.Items.Insert(0, s);
             });

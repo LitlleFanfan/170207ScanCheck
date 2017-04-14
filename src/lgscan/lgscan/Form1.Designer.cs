@@ -24,8 +24,8 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnOpenExcel = new System.Windows.Forms.ToolStripButton();
             this.btnRun = new System.Windows.Forms.ToolStripButton();
@@ -39,6 +39,8 @@
             this.lbxLog = new System.Windows.Forms.ListBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnStartLine = new System.Windows.Forms.Button();
+            this.btnStopLine = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -52,8 +54,6 @@
             this.lblResult = new System.Windows.Forms.Label();
             this.lblBarCode = new System.Windows.Forms.Label();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
-            this.btnStopLine = new System.Windows.Forms.Button();
-            this.btnStartLine = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -170,25 +170,30 @@
             // 
             // gvData
             // 
+            this.gvData.AllowUserToAddRows = false;
+            this.gvData.AllowUserToDeleteRows = false;
+            this.gvData.AllowUserToOrderColumns = true;
+            this.gvData.AllowUserToResizeColumns = false;
+            this.gvData.AllowUserToResizeRows = false;
             this.gvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gvData.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gvData.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gvData.DefaultCellStyle = dataGridViewCellStyle2;
             this.gvData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gvData.Location = new System.Drawing.Point(0, 0);
             this.gvData.MultiSelect = false;
@@ -213,7 +218,7 @@
             // lbxLog
             // 
             this.lbxLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbxLog.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbxLog.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbxLog.FormattingEnabled = true;
             this.lbxLog.ItemHeight = 21;
             this.lbxLog.Location = new System.Drawing.Point(0, 29);
@@ -225,7 +230,7 @@
             // 
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(565, 29);
@@ -254,131 +259,16 @@
             this.panel1.Size = new System.Drawing.Size(565, 297);
             this.panel1.TabIndex = 0;
             // 
-            // label7
+            // btnStartLine
             // 
-            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label7.Font = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(0, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(565, 29);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "状态";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(20, 205);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(180, 28);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "已装柜商品总数量";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(20, 164);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(180, 28);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "当前商品已装数量";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(20, 123);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(180, 28);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "当前商品总装数量";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(20, 82);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(180, 28);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "当前装柜商品条码";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(20, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 28);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "当前柜号";
-            // 
-            // lblAlreadyNumber
-            // 
-            this.lblAlreadyNumber.AutoSize = true;
-            this.lblAlreadyNumber.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblAlreadyNumber.Location = new System.Drawing.Point(246, 205);
-            this.lblAlreadyNumber.Name = "lblAlreadyNumber";
-            this.lblAlreadyNumber.Size = new System.Drawing.Size(24, 28);
-            this.lblAlreadyNumber.TabIndex = 6;
-            this.lblAlreadyNumber.Text = "0";
-            // 
-            // lblCurrentNumber
-            // 
-            this.lblCurrentNumber.AutoSize = true;
-            this.lblCurrentNumber.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblCurrentNumber.Location = new System.Drawing.Point(246, 164);
-            this.lblCurrentNumber.Name = "lblCurrentNumber";
-            this.lblCurrentNumber.Size = new System.Drawing.Size(24, 28);
-            this.lblCurrentNumber.TabIndex = 5;
-            this.lblCurrentNumber.Text = "0";
-            // 
-            // lblCurrentNeedNumber
-            // 
-            this.lblCurrentNeedNumber.AutoSize = true;
-            this.lblCurrentNeedNumber.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblCurrentNeedNumber.Location = new System.Drawing.Point(246, 123);
-            this.lblCurrentNeedNumber.Name = "lblCurrentNeedNumber";
-            this.lblCurrentNeedNumber.Size = new System.Drawing.Size(24, 28);
-            this.lblCurrentNeedNumber.TabIndex = 4;
-            this.lblCurrentNeedNumber.Text = "0";
-            // 
-            // lblBoxNo
-            // 
-            this.lblBoxNo.AutoSize = true;
-            this.lblBoxNo.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblBoxNo.Location = new System.Drawing.Point(246, 41);
-            this.lblBoxNo.Name = "lblBoxNo";
-            this.lblBoxNo.Size = new System.Drawing.Size(21, 28);
-            this.lblBoxNo.TabIndex = 3;
-            this.lblBoxNo.Text = "-";
-            // 
-            // lblResult
-            // 
-            this.lblResult.AutoSize = true;
-            this.lblResult.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblResult.ForeColor = System.Drawing.Color.Red;
-            this.lblResult.Location = new System.Drawing.Point(14, 248);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(102, 28);
-            this.lblResult.TabIndex = 2;
-            this.lblResult.Text = " 报警信息";
-            // 
-            // lblBarCode
-            // 
-            this.lblBarCode.AutoSize = true;
-            this.lblBarCode.Font = new System.Drawing.Font("Microsoft YaHei", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblBarCode.Location = new System.Drawing.Point(246, 82);
-            this.lblBarCode.Name = "lblBarCode";
-            this.lblBarCode.Size = new System.Drawing.Size(21, 28);
-            this.lblBarCode.TabIndex = 1;
-            this.lblBarCode.Text = "-";
-            // 
-            // openFile
-            // 
-            this.openFile.FileName = "openFileDialog1";
+            this.btnStartLine.Location = new System.Drawing.Point(419, 189);
+            this.btnStartLine.Name = "btnStartLine";
+            this.btnStartLine.Size = new System.Drawing.Size(134, 44);
+            this.btnStartLine.TabIndex = 15;
+            this.btnStartLine.Text = "启动生产线";
+            this.btnStartLine.UseVisualStyleBackColor = true;
+            this.btnStartLine.Visible = false;
+            this.btnStartLine.Click += new System.EventHandler(this.btnStartLine_Click);
             // 
             // btnStopLine
             // 
@@ -391,16 +281,131 @@
             this.btnStopLine.Visible = false;
             this.btnStopLine.Click += new System.EventHandler(this.btnStopLine_Click);
             // 
-            // btnStartLine
+            // label7
             // 
-            this.btnStartLine.Location = new System.Drawing.Point(419, 189);
-            this.btnStartLine.Name = "btnStartLine";
-            this.btnStartLine.Size = new System.Drawing.Size(134, 44);
-            this.btnStartLine.TabIndex = 15;
-            this.btnStartLine.Text = "启动生产线";
-            this.btnStartLine.UseVisualStyleBackColor = true;
-            this.btnStartLine.Visible = false;
-            this.btnStartLine.Click += new System.EventHandler(this.btnStartLine_Click);
+            this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.label7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label7.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(0, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(565, 29);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "状态";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(20, 205);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(180, 28);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "已装柜商品总数量";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(20, 164);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(180, 28);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "当前商品已装数量";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(20, 123);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(180, 28);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "当前商品总装数量";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(20, 82);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(180, 28);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "当前装柜商品条码";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(20, 41);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 28);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "当前柜号";
+            // 
+            // lblAlreadyNumber
+            // 
+            this.lblAlreadyNumber.AutoSize = true;
+            this.lblAlreadyNumber.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAlreadyNumber.Location = new System.Drawing.Point(246, 205);
+            this.lblAlreadyNumber.Name = "lblAlreadyNumber";
+            this.lblAlreadyNumber.Size = new System.Drawing.Size(24, 28);
+            this.lblAlreadyNumber.TabIndex = 6;
+            this.lblAlreadyNumber.Text = "0";
+            // 
+            // lblCurrentNumber
+            // 
+            this.lblCurrentNumber.AutoSize = true;
+            this.lblCurrentNumber.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblCurrentNumber.Location = new System.Drawing.Point(246, 164);
+            this.lblCurrentNumber.Name = "lblCurrentNumber";
+            this.lblCurrentNumber.Size = new System.Drawing.Size(24, 28);
+            this.lblCurrentNumber.TabIndex = 5;
+            this.lblCurrentNumber.Text = "0";
+            // 
+            // lblCurrentNeedNumber
+            // 
+            this.lblCurrentNeedNumber.AutoSize = true;
+            this.lblCurrentNeedNumber.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblCurrentNeedNumber.Location = new System.Drawing.Point(246, 123);
+            this.lblCurrentNeedNumber.Name = "lblCurrentNeedNumber";
+            this.lblCurrentNeedNumber.Size = new System.Drawing.Size(24, 28);
+            this.lblCurrentNeedNumber.TabIndex = 4;
+            this.lblCurrentNeedNumber.Text = "0";
+            // 
+            // lblBoxNo
+            // 
+            this.lblBoxNo.AutoSize = true;
+            this.lblBoxNo.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblBoxNo.Location = new System.Drawing.Point(246, 41);
+            this.lblBoxNo.Name = "lblBoxNo";
+            this.lblBoxNo.Size = new System.Drawing.Size(21, 28);
+            this.lblBoxNo.TabIndex = 3;
+            this.lblBoxNo.Text = "-";
+            // 
+            // lblResult
+            // 
+            this.lblResult.AutoSize = true;
+            this.lblResult.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblResult.ForeColor = System.Drawing.Color.Red;
+            this.lblResult.Location = new System.Drawing.Point(14, 248);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(102, 28);
+            this.lblResult.TabIndex = 2;
+            this.lblResult.Text = " 报警信息";
+            // 
+            // lblBarCode
+            // 
+            this.lblBarCode.AutoSize = true;
+            this.lblBarCode.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblBarCode.Location = new System.Drawing.Point(246, 82);
+            this.lblBarCode.Name = "lblBarCode";
+            this.lblBarCode.Size = new System.Drawing.Size(21, 28);
+            this.lblBarCode.TabIndex = 1;
+            this.lblBarCode.Text = "-";
+            // 
+            // openFile
+            // 
+            this.openFile.FileName = "openFileDialog1";
             // 
             // Form1
             // 
