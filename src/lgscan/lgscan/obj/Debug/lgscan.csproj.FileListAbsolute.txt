@@ -45,3 +45,4 @@ D:\mywork\softproject\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.Propert
 D:\mywork\softproject\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.csproj.GenerateResource.Cache
 D:\mywork\softproject\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.exe
 D:\mywork\softproject\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.pdb
+D:\mywork\softproject\170207ScanCheck\src\lgscan\lgscan\obj\Debug\lgscan.csprojResolveAssemblyReference.cache

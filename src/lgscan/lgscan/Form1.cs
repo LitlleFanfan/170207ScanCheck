@@ -108,7 +108,7 @@ namespace lgscan {
         /// 处理相机读到的号码。
         /// </summary>
         /// <param name="barcode"></param>
-        private void HandleBarCode(string barcode) {
+        private bool HandleBarCode(string barcode) {
             var num = InputItem(barcode);
 
             if (iLastStatus != num) {
@@ -124,6 +124,7 @@ namespace lgscan {
             }
 
             showLineInfo(num);
+            return num == 0;
         }
 
         private bool HandleWeight(string code, double weight) {
@@ -559,23 +560,23 @@ namespace lgscan {
                             code = stripBarcode(code);
 
                             if (!string.IsNullOrEmpty(code)) {
+                                // 称重
+                                var w = weiter.ReadWeight();
+
                                 // handle the code.
-                                HandleBarCode(code);
-                            }
+                                if (HandleBarCode(code)) {
+                                    // 比较
+                                    var weightOk = false;
+                                    if (w != null) {
+                                        weightOk = HandleWeight(code, w.value);
+                                    }
 
-                            // 称重
-                            var w = weiter.ReadWeight();
-                            // 比较
-                            var weightOk = false;
-                            if (w != null) {
-                                weightOk = HandleWeight(code, w.value);
+                                    // 显示结果
+                                    if (!weightOk) {
+                                        showLineInfo(3);
+                                    }
+                                }
                             }
-
-                            // 显示结果
-                            if (!weightOk) {
-                                showLineInfo(3);
-                            }
-
                             Thread.Sleep(200);
                         }
                     }
